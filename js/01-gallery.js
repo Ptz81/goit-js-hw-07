@@ -39,9 +39,49 @@ import { galleryItems } from './gallery-items.js';
 
 */
 
-const galleryElement = document.querySelector('.gallery')
+const gallery = document.querySelector('.gallery')
+const newElement = createElem(galleryItems);
+
+gallery.insertAdjacentHTML('beforeend', newElement);
+gallery.addEventListener('click', openModal);
+
+  function createElem(item){
+    return item.map(({ preview, original, description })=>{
+      return `<div class="gallery__item">
+  <a class="gallery__link" href="${original}">
+    <img
+      class="gallery__image"
+      src="${preview}"
+      data-source="#{original}"
+      alt="${description}"
+    />
+  </a>
+</div>`
+  }).join('');
+}
 
 
-console.log(galleryElement)
+function openModal(event) {
+  event.preventDefault();
+  
+  const imgItem = event.target.contains('.gallery__image');
+  if (false) {
+    return;
+  }
+  const imgSource = event.target.dataset.source;
+  console.log(imgSource);
 
-console.log(galleryItems);
+  const instance = basicLightbox.create(`
+    <img src="${imgSource}" width='1200' height='auto'>
+`)
+instance.show();
+}
+  // const imgSource = imgItem.getAttribute([data - source]);
+ 
+// onShow: (instance) => {
+//   window.addEventListener('keydown', escKeyPress)
+// }
+
+// console.log(gallery);
+
+// console.log(newElement);
