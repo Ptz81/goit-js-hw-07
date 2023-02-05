@@ -38,13 +38,17 @@ import { galleryItems } from './gallery-items.js';
 Бібліотека basicLightbox містить метод для програмного закриття модального вікна.
 
 */
-
+//знайти
 const gallery = document.querySelector('.gallery')
+//розмітка
 const newElement = createElem(galleryItems);
-
+//додати розмітку
 gallery.insertAdjacentHTML('beforeend', newElement);
+//слухаємо подію
 gallery.addEventListener('click', openModal);
 
+
+//рендер масиву обєктів
   function createElem(item){
     return item.map(({ preview, original, description })=>{
       return `<div class="gallery__item">
@@ -52,7 +56,7 @@ gallery.addEventListener('click', openModal);
     <img
       class="gallery__image"
       src="${preview}"
-      data-source="#{original}"
+      data-source="${original}"
       alt="${description}"
     />
   </a>
@@ -60,28 +64,35 @@ gallery.addEventListener('click', openModal);
   }).join('');
 }
 
-
+// функція відкриття та закриття вікон
 function openModal(event) {
+
+  //забороняємо переходити на нову вкладку
   event.preventDefault();
-  
-  const imgItem = event.target.contains('.gallery__image');
-  if (false) {
+  //перевіряємо де ми клікаємо і якщо не на картинку, то ігноруємо
+  if (event.target.nodeName !== 'IMG') {
     return;
   }
-  const imgSource = event.target.dataset.source;
-  console.log(imgSource);
-
+//бібліотека фотографій - відкриття
   const instance = basicLightbox.create(`
-    <img src="${imgSource}" width='1200' height='auto'>
-`)
-instance.show();
+    <img src="${event.target.dataset.source}" width='800' height='600'>
+`);
+  instance.show();
+  //закриття через кнопку  escape
+  gallery.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape') {
+      instance.close();
+    }
+ })
 }
-  // const imgSource = imgItem.getAttribute([data - source]);
+
+
  
 // onShow: (instance) => {
-//   window.addEventListener('keydown', escKeyPress)
+//   window.addEventListener('keydown', escapeBtn)
+// }
+// onClose: (instance) => {
+//   window.addEventListener('keydown', escapeBtn)
 // }
 
-// console.log(gallery);
 
-// console.log(newElement);
