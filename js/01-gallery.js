@@ -40,15 +40,15 @@ import { galleryItems } from './gallery-items.js';
 */
 //знайти
 const gallery = document.querySelector('.gallery')
-//розмітка
+//розмітка у змінній
 const newElement = createElem(galleryItems);
-//додати розмітку
+//додати розмітку після галереї
 gallery.insertAdjacentHTML('beforeend', newElement);
 //слухаємо подію
 gallery.addEventListener('click', openModal);
 
 
-//рендер масиву обєктів
+//функція рендеру масиву обєктів та створення розмітки
   function createElem(item){
     return item.map(({ preview, original, description })=>{
       return `<div class="gallery__item">
