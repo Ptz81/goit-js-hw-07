@@ -73,26 +73,27 @@ function openModal(event) {
   if (event.target.nodeName !== 'IMG') {
     return;
   }
-//бібліотека фотографій - відкриття
+  //бібліотека фотографій - відкриття
   const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width='800' height='600'>
-`);
+    <img src="${event.target.dataset.source}" width='800' height='600'>`,
+
+{
+  onShow: (instance) => {
+    window.addEventListener('keydown', escapeBtn);
+  },
+  onClose: (instance) => {
+    window.addEventListener('keydown', escapeBtn);
+  },
+}
+);
   instance.show();
-  //закриття через кнопку  escape
-  gallery.addEventListener('keydown', (e) => {
-    if (e.code === 'Escape') {
+  //функція закриття через кнопку  escape
+
+
+  function escapeBtn(e) {
+    if (e.code === 'Escape'){
       instance.close();
     }
- })
+  }
 }
-
-
- 
-// onShow: (instance) => {
-//   window.addEventListener('keydown', escapeBtn)
-// }
-// onClose: (instance) => {
-//   window.addEventListener('keydown', escapeBtn)
-// }
-
 
